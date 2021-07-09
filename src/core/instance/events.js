@@ -13,6 +13,9 @@ export function initEvents (vm: Component) {
   vm._events = Object.create(null)
   vm._hasHookEvent = false
   // init parent attached events
+  // ! 获取父组件中声明的回调函数，创建事件监听
+  // * this.$emit('one-event')
+  // * this.$on('one-event')
   const listeners = vm.$options._parentListeners
   if (listeners) {
     updateComponentListeners(vm, listeners)

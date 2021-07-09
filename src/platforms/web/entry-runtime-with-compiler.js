@@ -14,6 +14,7 @@ const idToTemplate = cached(id => {
   return el && el.innerHTML
 })
 
+// ! 扩展 $mount
 const mount = Vue.prototype.$mount
 Vue.prototype.$mount = function (
   el?: string | Element,
@@ -31,6 +32,7 @@ Vue.prototype.$mount = function (
 
   const options = this.$options
   // resolve template/el and convert to render function
+  // ! render > template > el
   if (!options.render) {
     let template = options.template
     if (template) {
@@ -69,6 +71,7 @@ Vue.prototype.$mount = function (
         delimiters: options.delimiters,
         comments: options.comments
       }, this)
+      // ! template 编译成 render 函数
       options.render = render
       options.staticRenderFns = staticRenderFns
 
@@ -79,6 +82,7 @@ Vue.prototype.$mount = function (
       }
     }
   }
+  // ! 默认的挂载行为
   return mount.call(this, el, hydrating)
 }
 
