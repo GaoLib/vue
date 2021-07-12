@@ -46,8 +46,10 @@ export class Observer {
     def(value, '__ob__', this)
     if (Array.isArray(value)) {
       if (hasProto) {
+        // ! 覆盖数组原型
         protoAugment(value, arrayMethods)
       } else {
+        // * ie
         copyAugment(value, arrayMethods, arrayKeys)
       }
       this.observeArray(value)
@@ -111,6 +113,8 @@ export function observe (value: any, asRootData: ?boolean): Observer | void {
   if (!isObject(value) || value instanceof VNode) {
     return
   }
+  // ! 1.判断传入对象是Array还是Object
+  // ! 2. 一部分通知更新作用
   let ob: Observer | void
   if (hasOwn(value, '__ob__') && value.__ob__ instanceof Observer) {
     ob = value.__ob__
@@ -153,12 +157,16 @@ export function defineReactive (
     val = obj[key]
   }
 
+  // ! 递归处理
+  // * shallow 可设置不递归
   let childOb = !shallow && observe(val)
   Object.defineProperty(obj, key, {
     enumerable: true,
     configurable: true,
     get: function reactiveGetter () {
       const value = getter ? getter.call(obj) : val
+      // 依赖收集 dep和watcher建立关系
+      // ! childOb的dep也要和watcher建立关系 =》 $set
       if (Dep.target) {
         dep.depend()
         if (childOb) {

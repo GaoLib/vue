@@ -55,9 +55,9 @@ export function initMixin (Vue: Class<Component>) {
     initRender(vm)    // * $slots, $scopedSlots, _c, $createElement
     callHook(vm, 'beforeCreate')
     // ! 初始化组件状态
-    initInjections(vm) // resolve injections before data/props
-    initState(vm)
-    initProvide(vm) // resolve provide after data/props
+    initInjections(vm) // * resolve injections before data/props
+    initState(vm)      // * props, data, methods, computed, watch
+    initProvide(vm)    // * resolve provide after data/props
     callHook(vm, 'created')
 
     /* istanbul ignore if */
@@ -67,6 +67,7 @@ export function initMixin (Vue: Class<Component>) {
       measure(`vue ${vm._name} init`, startTag, endTag)
     }
 
+    // ! 如果设置了el选项，则自动挂载
     if (vm.$options.el) {
       vm.$mount(vm.$options.el)
     }

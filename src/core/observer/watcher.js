@@ -24,6 +24,7 @@ let uid = 0
  * and fires callback when the expression value changes.
  * This is used for both the $watch() api and directives.
  */
+// ! 默认一个组件只有一个渲染wather,如果用户执行 $watcher 或 设置 watch 选项会产生多个watcher
 export default class Watcher {
   vm: Component;
   expression: string;
@@ -129,9 +130,11 @@ export default class Watcher {
   addDep (dep: Dep) {
     const id = dep.id
     if (!this.newDepIds.has(id)) {
+      // ! 添加dep和自己的关系
       this.newDepIds.add(id)
       this.newDeps.push(dep)
       if (!this.depIds.has(id)) {
+        // ! 在dep中也添加两者间关系
         dep.addSub(this)
       }
     }

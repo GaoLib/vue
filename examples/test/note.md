@@ -17,3 +17,5 @@
 - 扩展Vue实例方法
 
 ## src\core\instance\init.js
+实例初始化
+
