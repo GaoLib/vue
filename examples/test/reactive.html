@@ -8,26 +8,32 @@
 
 <body>
     <div id="demo">
-        <h1>数据响应化</h1>
-        <p>{{obj.foo}}</p>
+			<h1>数据响应化</h1>
+			<p>{{obj.foo}}</p>
+			<!-- <p>{{arr}}</p> -->
     </div>
     <script>
-        // 默认一个组件只有一个渲染wather,如果用户执行 $watcher 或 设置 watch 选项会产生多个watcher
-        // 几个Observer？Dep？Watcher？
-        //        2    4   1
-        const app = new Vue({
-            el: '#demo',
-            data: { 
-                obj: { 
-                    foo: 'foo' 
-                } 
-            },
-            mounted() {
-                setTimeout(() => {
-                    this.obj.foo = 'fooooo'
-                }, 1000);
-            }
-        });
+			// 默认一个组件只有一个渲染wather,如果用户执行 $watcher 或 设置 watch 选项会产生多个watcher
+			// 几个Observer？Dep？Watcher？
+			//        2    4   1
+			const app = new Vue({
+				el: '#demo',
+				data: { 
+					obj: { 
+						foo: 'foo' 
+					},
+					desc: '<span style="color: red;">Go Go Go</span>',
+        	name: '',
+					// arr: [1,2,3]
+				},
+				mounted() {
+					setTimeout(() => {
+						// this.obj.foo = 'fooooo'
+						this.$set(this.obj, 'bar', 'fllllllll')
+						// this.arr.push(4)
+					}, 1000);
+				}
+			});
     </script>
 </body>
 

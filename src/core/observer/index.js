@@ -213,6 +213,7 @@ export function set (target: Array<any> | Object, key: any, val: any): any {
     warn(`Cannot set reactive property on undefined, null, or primitive value: ${(target: any)}`)
   }
   if (Array.isArray(target) && isValidArrayIndex(key)) {
+    // ! 数组扩充
     target.length = Math.max(target.length, key)
     target.splice(key, 1, val)
     return val
@@ -229,6 +230,7 @@ export function set (target: Array<any> | Object, key: any, val: any): any {
     )
     return val
   }
+  // ! target 需要为响应式,否则只是简单赋值
   if (!ob) {
     target[key] = val
     return val
