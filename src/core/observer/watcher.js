@@ -168,10 +168,13 @@ export default class Watcher {
   update () {
     /* istanbul ignore else */
     if (this.lazy) {
+      // ! computed
       this.dirty = true
     } else if (this.sync) {
+      // ! 如果标记为同步，则立即更新
       this.run()
     } else {
+      // ! 当前watcher去排队
       queueWatcher(this)
     }
   }
@@ -182,7 +185,9 @@ export default class Watcher {
    */
   run () {
     if (this.active) {
+      // ! 组件更新
       const value = this.get()
+      // ! 用户 $watch 回调函数
       if (
         value !== this.value ||
         // Deep watchers and watchers on Object/Arrays should fire even
