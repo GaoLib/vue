@@ -18,6 +18,15 @@
 					foo: 'ready, go'
 				},
 				mounted() {
+          // callbacks: [cb, flushSchedulerQueue],先将回调函数放入队列中，然后才是更新函数
+          // this.$nextTick(() => {
+          //   console.log('p1.innerHTML', p1.innerHTML)
+          // })
+
+          // Promise.resolve().then(() => {
+          //   console.log('promise', p1.innerHTML)
+          // })
+
 					this.foo = Math.random()
           console.log(1, this.foo)
           this.foo = Math.random()
@@ -25,9 +34,17 @@
           this.foo = Math.random()
           console.log(3, this.foo)
           console.log('p1.innerHTML', p1.innerHTML)
+
+          Promise.resolve().then(() => {
+            console.log('promise', p1.innerHTML)
+          })
+
           this.$nextTick(() => {
             console.log('p1.innerHTML', p1.innerHTML)
           })
+          // 假设promise中回调函数为cb1，nextTick中回调函数为cb2
+          // callbacks: [cb2]
+          // microtasks: [flushCallbacks, cb1]
 				}
 			});
     </script>

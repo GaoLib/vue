@@ -37,3 +37,10 @@
 - timerFunc() 启动异步任务, p.then(flushCallbacks) => 将 flushCallbacks 放入微任务队列
 
 -----  异步 ------
+- flushCallbacks()
+- flushSchedulerQueue()
+- water.run()
+- updateComponent()    【src\core\instance\lifecycle.js】
+- vm._render()
+- vm._update()
+- __patch__
