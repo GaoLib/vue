@@ -63,3 +63,4 @@
 
 ## src\core\vdom\patch.js  L700
 - patch()
+- key的重要性 L
