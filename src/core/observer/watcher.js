@@ -78,6 +78,7 @@ export default class Watcher {
       ? expOrFn.toString()
       : ''
     // parse expression for getter
+    // ! mountComponent
     if (typeof expOrFn === 'function') {
       this.getter = expOrFn
     } else {

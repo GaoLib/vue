@@ -46,6 +46,8 @@
 
 ## src\core\observer\watcher.js
 - water.run()
+- this.get()
+- this.getter.call(vm, vm)
 
 ## src\core\instance\lifecycle.js
 - updateComponent()
