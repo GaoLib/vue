@@ -34,13 +34,14 @@ import {
 
 // inline hooks to be invoked on component VNodes during patch
 const componentVNodeHooks = {
+  // ! 初始化
   init (vnode: VNodeWithData, hydrating: boolean): ?boolean {
     if (
       vnode.componentInstance &&
       !vnode.componentInstance._isDestroyed &&
       vnode.data.keepAlive
     ) {
-      // kept-alive components, treat as a patch
+      // ! kept-alive components, treat as a patch
       const mountedNode: any = vnode // work around flow
       componentVNodeHooks.prepatch(mountedNode, mountedNode)
     } else {
@@ -98,6 +99,7 @@ const componentVNodeHooks = {
 
 const hooksToMerge = Object.keys(componentVNodeHooks)
 
+// ! 接收组件参数，返回vnode
 export function createComponent (
   Ctor: Class<Component> | Function | Object | void,
   data: ?VNodeData,
@@ -152,6 +154,7 @@ export function createComponent (
 
   // transform component v-model data into props & events
   if (isDef(data.model)) {
+    // ! 处理组件model选项
     transformModel(Ctor.options, data)
   }
 
@@ -183,6 +186,7 @@ export function createComponent (
   }
 
   // install component management hooks onto the placeholder node
+  // ! 安装组件管理钩子
   installComponentHooks(data)
 
   // return a placeholder vnode
@@ -225,6 +229,7 @@ export function createComponentInstanceForVnode (
   return new vnode.componentOptions.Ctor(options)
 }
 
+// ! 合并组件默认钩子和用户定义的钩子
 function installComponentHooks (data: VNodeData) {
   const hooks = data.hook || (data.hook = {})
   for (let i = 0; i < hooksToMerge.length; i++) {

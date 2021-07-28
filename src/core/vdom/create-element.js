@@ -31,6 +31,7 @@ export function createElement (
   data: any,
   children: any,
   normalizationType: any,
+  // * 参数标准化
   alwaysNormalize: boolean
 ): VNode | Array<VNode> {
   if (Array.isArray(data) || isPrimitive(data)) {
@@ -44,6 +45,7 @@ export function createElement (
   return _createElement(context, tag, data, children, normalizationType)
 }
 
+// ! 接收组件/元素配置，返回vdom
 export function _createElement (
   context: Component,
   tag?: string | Class<Component> | Function | Object,
@@ -92,11 +94,14 @@ export function _createElement (
   } else if (normalizationType === SIMPLE_NORMALIZE) {
     children = simpleNormalizeChildren(children)
   }
+
+  // ! 根据tag类型做不同处理
   let vnode, ns
   if (typeof tag === 'string') {
     let Ctor
     ns = (context.$vnode && context.$vnode.ns) || config.getTagNamespace(tag)
     if (config.isReservedTag(tag)) {
+      // ! tag 为 div。p
       // platform built-in elements
       if (process.env.NODE_ENV !== 'production' && isDef(data) && isDef(data.nativeOn) && data.tag !== 'component') {
         warn(
@@ -104,10 +109,12 @@ export function _createElement (
           context
         )
       }
+      // ! 元素，直接创建
       vnode = new VNode(
         config.parsePlatformTagName(tag), data, children,
         undefined, undefined, context
       )
+    // ! 根据组件名称获取其构造函数
     } else if ((!data || !data.pre) && isDef(Ctor = resolveAsset(context.$options, 'components', tag))) {
       // component
       vnode = createComponent(Ctor, data, context, children, tag)

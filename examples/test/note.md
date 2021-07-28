@@ -61,6 +61,8 @@
 ## src\platforms\web\runtime\index.js
 - __patch__
 
-## src\core\vdom\patch.js  L700
+## src\core\vdom\patch.js  L735
 - patch()
+- patchVnode()       同层比较，深度优先
+- updateChildren()   双端判断
 - key的重要性 L37
