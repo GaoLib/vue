@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <title>Vue源码剖析</title>
-    <script src="../../dist/vue.js"></script>
-</head>
-
-<body>
-    <div id="demo">
-			<h1>数据响应化</h1>
-			<p>{{obj.foo}}</p>
-    </div>
-    <script>
-			// 默认一个组件只有一个渲染wather,如果用户执行 $watcher 或 设置 watch 选项会产生多个watcher
-			// 几个Observer？Dep？Watcher？
-			//        2    4   1
-			const app = new Vue({
-				el: '#demo',
-				data: { 
-					obj: { 
-						foo: 'foo' 
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Vue源码剖析</title>
+		<script src="../../dist/vue.js"></script>
+	</head>
+	<body>
+			<div id="demo">
+				<h1>数据响应化</h1>
+				<p>{{obj.foo}}</p>
+			</div>
+			<script>
+				// 默认一个组件只有一个渲染wather,如果用户执行 $watcher 或 设置 watch 选项会产生多个watcher
+				// 几个Observer？Dep？Watcher？
+				//        2    4   1
+				const app = new Vue({
+					el: '#demo',
+					data: { 
+						obj: { 
+							foo: 'foo' 
+						},
 					},
-				},
-				mounted() {
-					setTimeout(() => {
-						this.obj.foo = 'fooooo'
-						// this.$set(this.obj, 'bar', 'fllllllll')
-					}, 1000);
-				}
-			});
-    </script>
-</body>
-
+					mounted() {
+						setTimeout(() => {
+							this.obj.foo = 'fooooo'
+							// this.$set(this.obj, 'bar', 'fllllllll')
+						}, 1000);
+					}
+				});
+			</script>
+	</body>
 </html>

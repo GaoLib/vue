@@ -80,6 +80,7 @@ function add (
       }
     }
   }
+  // * 添加监听
   target.addEventListener(
     name,
     handler,
@@ -110,6 +111,7 @@ function updateDOMListeners (oldVnode: VNodeWithData, vnode: VNodeWithData) {
   const oldOn = oldVnode.data.on || {}
   target = vnode.elm
   normalizeEvents(on)
+  // ! 判断是否为原生事件，传入不同的 add 方法
   updateListeners(on, oldOn, add, remove, createOnceHandler, vnode.context)
   target = undefined
 }
