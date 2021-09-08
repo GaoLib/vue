@@ -54,6 +54,8 @@ export function updateComponentListeners (
 
 export function eventsMixin (Vue: Class<Component>) {
   const hookRE = /^hook:/
+  // ! $on(['ev1','ev2'], cb1)
+  // ! $on('ev',cb2)
   Vue.prototype.$on = function (event: string | Array<string>, fn: Function): Component {
     const vm: Component = this
     if (Array.isArray(event)) {
@@ -61,6 +63,7 @@ export function eventsMixin (Vue: Class<Component>) {
         vm.$on(event[i], fn)
       }
     } else {
+      // ! 把事件名称和回调函数存入vm_events
       (vm._events[event] || (vm._events[event] = [])).push(fn)
       // optimize hook:event cost by using a boolean flag marked at registration
       // instead of a hash lookup
@@ -73,6 +76,7 @@ export function eventsMixin (Vue: Class<Component>) {
 
   Vue.prototype.$once = function (event: string, fn: Function): Component {
     const vm: Component = this
+    // ! 高阶函数，仅执行依次 fn 就立即解除监听
     function on () {
       vm.$off(event, on)
       fn.apply(vm, arguments)
@@ -85,6 +89,7 @@ export function eventsMixin (Vue: Class<Component>) {
   Vue.prototype.$off = function (event?: string | Array<string>, fn?: Function): Component {
     const vm: Component = this
     // all
+    // ! 无参数，清除所有事件监听
     if (!arguments.length) {
       vm._events = Object.create(null)
       return vm
